@@ -104,8 +104,8 @@ $(document).ready(function () {
             $.ajax({
                 url: queryURL,
                 method: "GET",
-                // dataType: "jsonp",
-                crossDomain: true,
+                dataType: "jsonp",
+                // crossDomain: true,
                 // headers: {
                 //     "accept": "application/json",
                 //     "Access-Control-Allow-Origin": "*"
