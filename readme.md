@@ -3,7 +3,7 @@ Bootcamp Project #1 - Group 5
 Satellite Flyover
 
 
- <img src="https://raw.githubusercontent.com/gshaver82/SatFlyover/master/assets/images/SatFlyoverProjectSite.jpg" alt="screenshot" width="900" height="415"> 
+ <img src="https://raw.githubusercontent.com/gshaver82/OfMonstersAndMen/master/assets/images/SatFlyoverProjectSite.jpg" alt="screenshot" width="900" height="415"> 
 
 <a href="https://gshaver82.github.io/OfMonstersAndMen/">Deployed app</a>
 this app is no longer fully working due to the n2y0 api now requiring CORS. 
