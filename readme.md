@@ -5,7 +5,7 @@ Satellite Flyover
 
  <img src="https://raw.githubusercontent.com/gshaver82/SatFlyover/master/assets/images/SatFlyoverProjectSite.jpg" alt="screenshot" width="900" height="415"> 
 
-<a href="https://gshaver82.github.io/SatFlyover/">Deployed app</a>
+<a href="https://gshaver82.github.io/OfMonstersAndMen/">Deployed app</a>
 
 
 Group Member:
