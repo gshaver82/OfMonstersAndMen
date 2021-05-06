@@ -5,8 +5,13 @@ Satellite Flyover
 
  <img src="https://raw.githubusercontent.com/gshaver82/OfMonstersAndMen/master/assets/images/SatFlyoverProjectSite.jpg" alt="screenshot" width="900" height="415"> 
 
-<a href="https://gshaver82.github.io/OfMonstersAndMen/">Deployed app</a>
+
+# site status
+<a href="https://gshaver82.github.io/OfMonstersAndMen/">Deployed app</a><br>
+
 this app is no longer fully working due to the n2y0 api now requiring CORS. 
+
+From the screenshot you can see that i had the weather API and the satelite API working together to show you what sats were overhead, what direction to look and what the weather conditions were at the time. the Link not found at the bottom was for a paid API that linked the NORAD ID to the wiki for the satelite.
 
 Group Member:
 _ Anitha Venkatesan
