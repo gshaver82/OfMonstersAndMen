@@ -104,12 +104,12 @@ $(document).ready(function () {
             $.ajax({
                 url: queryURL,
                 method: "GET",
-                dataType: "jsonp",
+                // dataType: "jsonp",
                 crossDomain: true,
-                headers: {
-                    "accept": "application/json",
-                    "Access-Control-Allow-Origin": "*"
-                }
+                // headers: {
+                //     "accept": "application/json",
+                //     "Access-Control-Allow-Origin": "*"
+                // }
             }).then(function (response) {
                 //Currently untested, idea being that if response above is empty, error is displayed
                 if (!response.above) {
