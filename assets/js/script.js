@@ -104,9 +104,12 @@ $(document).ready(function () {
             $.ajax({
                 url: queryURL,
                 method: "GET",
+                'dataType': "jsonp",
+                "async": true,
+                "crossDomain": true,
                 "headers": {
                     "accept": "application/json",
-                    "Access-Control-Allow-Origin":"*"
+                    "Access-Control-Allow-Origin": "*"
                 }
             }).then(function (response) {
                 //Currently untested, idea being that if response above is empty, error is displayed
@@ -273,12 +276,12 @@ function displayWikiApi(NoradID) {
         console.log(response.description);
         console.log("response.links[0].link_name + response.links[0].link_url");
         $("#Description").show();
-        if(response.description){
-            $("#Description").html("<h5>Description</h5>" +response.description); 
-        }  
+        if (response.description) {
+            $("#Description").html("<h5>Description</h5>" + response.description);
+        }
         else {
             $("#Description").text("Description not found");
-        }     
+        }
         if (!response.links[0]) {
             //do nothing if links is empty
         } else {
@@ -287,7 +290,7 @@ function displayWikiApi(NoradID) {
             $("#link").text(response.links[0].link_name);
             $("#link").attr("href", response.links[0].link_url);
         }
-    }).catch(function() {
+    }).catch(function () {
         $("#Description").show();
         $("#Description").text("Description not found");
     });
