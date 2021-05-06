@@ -105,7 +105,6 @@ $(document).ready(function () {
                 url: queryURL,
                 method: "GET",
                 dataType: "jsonp",
-                async: true,
                 crossDomain: true,
                 headers: {
                     "accept": "application/json",
