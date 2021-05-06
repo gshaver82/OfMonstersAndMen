@@ -103,7 +103,11 @@ $(document).ready(function () {
                 "/&apiKey=WWZP6Q-SXMAX7-WBLGBK-4EVN";
             $.ajax({
                 url: queryURL,
-                method: "GET"
+                method: "GET",
+                "headers": {
+                    "accept": "application/json",
+                    "Access-Control-Allow-Origin":"*"
+                }
             }).then(function (response) {
                 //Currently untested, idea being that if response above is empty, error is displayed
                 if (!response.above) {
