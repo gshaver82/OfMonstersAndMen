@@ -49,7 +49,7 @@ $(document).ready(function () {
     var category = 0;
     console.log("city selected is: " + cityName);
     renderHistory();
-    $("#submitBtn,#past-cities").on("click", function (event) {
+    $("#submitBtn,#past-cities").on("click", async function (event) {
         event.preventDefault();
         $("#offset").removeClass("offset-s4 s4 testcls");
         $('#offset').addClass("s12 m3");
@@ -80,7 +80,7 @@ $(document).ready(function () {
         var currentURL = "https://api.openweathermap.org/data/2.5/weather?q=";
         var apiIdURL = "&appid=";
         var openCurrWeatherAPI = currentURL + cityName + apiIdURL + apiKey;
-        $.ajax({
+        await $.ajax({
             url: openCurrWeatherAPI,
             method: "GET"
         }).then(function (response1) {
@@ -93,75 +93,76 @@ $(document).ready(function () {
             $("#lat").text("Latitude: " + cityLat);
             $("#lon").text("Longitude: " + cityLon);
             //End of Open Weather API
-            var queryURL =
-                "https://www.n2yo.com/rest/v1/satellite/above/" +
-                cityLat +
-                "/" +
-                cityLon +
-                "/0/70/" +
-                category +
-                "/&apiKey=WWZP6Q-SXMAX7-WBLGBK-4EVN";
-            $.ajax({
-                url: queryURL,
-                method: "GET"
-            }).then(function (response) {
-                //Currently untested, idea being that if response above is empty, error is displayed
-                if (!response.above) {
-                    $("#satList ul li").text("Satellite not found");
-                    $("#satName").text("Satellite not found");
-                    $("#satID").text("Satellite not found");
-                    $("#Direction").text("Satellite not found");
-                    $("#Elevation").text("Satellite not found");
-                    $("#Description").text("Description not found");
-                    $("#link").attr("href", "");
-                } else {
-                    //emptying the sat list before populating it
-                    $("#satList ul").empty();
-                    $(".card-sat-info").show();
-                    //this loop populates the list of sats above location
-                    for (var i = 0; i < response.above.length; i++) {
-                        //console.log("i is " + i + " " + response.above[i].satname + "Satellite ID :" + response.above[i].satid);
-                        $("#satList ul").append("<li class='tab satListClass' value = '" + i + "'><a>"
-                            + response.above[i].satname + "</a></li>");
-                        try {
-                            $('.tabs').tabs();
-                        } catch (e) { }
-                    }
+        });
+        var queryURL =
+            "https://www.n2yo.com/rest/v1/satellite/above/" +
+            cityLat +
+            "/" +
+            cityLon +
+            "/0/70/" +
+            category +
+            "/&apiKey=WWZP6Q-SXMAX7-WBLGBK-4EVN";
+        await $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function (response) {
+            //Currently untested, idea being that if response above is empty, error is displayed
+            if (!response.above) {
+                $("#satList ul li").text("Satellite not found");
+                $("#satName").text("Satellite not found");
+                $("#satID").text("Satellite not found");
+                $("#Direction").text("Satellite not found");
+                $("#Elevation").text("Satellite not found");
+                $("#Description").text("Description not found");
+                $("#link").attr("href", "");
+            } else {
+                //emptying the sat list before populating it
+                $("#satList ul").empty();
+                $(".card-sat-info").show();
+                //this loop populates the list of sats above location
+                for (var i = 0; i < response.above.length; i++) {
+                    //console.log("i is " + i + " " + response.above[i].satname + "Satellite ID :" + response.above[i].satid);
+                    $("#satList ul").append("<li class='tab satListClass' value = '" + i + "'><a>"
+                        + response.above[i].satname + "</a></li>");
+                    try {
+                        $('.tabs').tabs();
+                    } catch (e) { }
+                }
 
-                    //Populating data that will not change regardless of sat clicked
-                    //TODO add weather viewing conditions 
-                    console.log("sunset" + response1.sys.sunset);
-                    console.log("sunrise" + response1.sys.sunrise);
-                    //TODO code that calcs if the current city in any part of the world is at night time
-                    // https://openweathermap.org/current
-                    // $("#nightTime").text("#nightTime");
-                    // console.log("conditions" + response1.weather[0].description);
-                    $("#Conditions").text(response1.weather[0].description);
-                    //populating card with the first sat retrieved
-                    //ONLY what is below is what will change if different Sat is clicked. 
-                    $("#satName").text(response.above[0].satname);
-                    $("#satID").text(response.above[0].satid);
+                //Populating data that will not change regardless of sat clicked
+                //TODO add weather viewing conditions 
+                console.log("sunset" + response1.sys.sunset);
+                console.log("sunrise" + response1.sys.sunrise);
+                //TODO code that calcs if the current city in any part of the world is at night time
+                // https://openweathermap.org/current
+                // $("#nightTime").text("#nightTime");
+                // console.log("conditions" + response1.weather[0].description);
+                $("#Conditions").text(response1.weather[0].description);
+                //populating card with the first sat retrieved
+                //ONLY what is below is what will change if different Sat is clicked. 
+                $("#satName").text(response.above[0].satname);
+                $("#satID").text(response.above[0].satid);
+                $("#Direction").text("Calculating...");
+                $("#Elevation").text("Calculating...");
+                //TODO retrieve NORAD sat id, use the other api to display viewing direction and elevation
+                var NoradID = response.above[0].satid
+                elevationAzimuth(NoradID, cityLat, cityLon);
+                displayWikiApi(NoradID);
+                $(".satListClass").on("click", function () {
+                    $("#Description").hide();
+                    var clickedIndex = $(this).attr("value");
+                    console.log("sat clicked index of " + clickedIndex);
+                    $("#satName").text(response.above[clickedIndex].satname);
+                    $("#satID").text(response.above[clickedIndex].satid)
                     $("#Direction").text("Calculating...");
                     $("#Elevation").text("Calculating...");
-                    //TODO retrieve NORAD sat id, use the other api to display viewing direction and elevation
-                    var NoradID = response.above[0].satid
+                    var NoradID = response.above[clickedIndex].satid
                     elevationAzimuth(NoradID, cityLat, cityLon);
                     displayWikiApi(NoradID);
-                    $(".satListClass").on("click", function () {
-                        $("#Description").hide();
-                        var clickedIndex = $(this).attr("value");
-                        console.log("sat clicked index of " + clickedIndex);
-                        $("#satName").text(response.above[clickedIndex].satname);
-                        $("#satID").text(response.above[clickedIndex].satid)
-                        $("#Direction").text("Calculating...");
-                        $("#Elevation").text("Calculating...");
-                        var NoradID = response.above[clickedIndex].satid
-                        elevationAzimuth(NoradID, cityLat, cityLon);
-                        displayWikiApi(NoradID);
-                    });
-                }
-            });
+                });
+            }
         });
+
     });
 
     function updateCityStore(city) {
@@ -269,12 +270,12 @@ function displayWikiApi(NoradID) {
         console.log(response.description);
         console.log("response.links[0].link_name + response.links[0].link_url");
         $("#Description").show();
-        if(response.description){
-            $("#Description").html("<h5>Description</h5>" +response.description); 
-        }  
+        if (response.description) {
+            $("#Description").html("<h5>Description</h5>" + response.description);
+        }
         else {
             $("#Description").text("Description not found");
-        }     
+        }
         if (!response.links[0]) {
             //do nothing if links is empty
         } else {
@@ -283,7 +284,7 @@ function displayWikiApi(NoradID) {
             $("#link").text(response.links[0].link_name);
             $("#link").attr("href", response.links[0].link_url);
         }
-    }).catch(function() {
+    }).catch(function () {
         $("#Description").show();
         $("#Description").text("Description not found");
     });
