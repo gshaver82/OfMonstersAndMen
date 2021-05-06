@@ -107,7 +107,7 @@ $(document).ready(function () {
                 dataType: "jsonp",
                 // crossDomain: true,
                 headers: {
-                    "accept": "application/json",
+                    // "accept": "application/json",
                     "Access-Control-Allow-Origin": "*"
                 }
             }).then(function (response) {
