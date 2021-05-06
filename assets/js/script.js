@@ -102,7 +102,7 @@ $(document).ready(function () {
                 category +
                 "/&apiKey=WWZP6Q-SXMAX7-WBLGBK-4EVN";
             $.ajax({
-                crossOrigin: true,
+                // crossOrigin: true,
                 url: queryURL,
                 method: "GET",
                 // dataType: "jsonp",
