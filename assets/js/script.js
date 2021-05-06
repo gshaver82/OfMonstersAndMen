@@ -94,7 +94,7 @@ $(document).ready(function () {
             $("#lon").text("Longitude: " + cityLon);
             //End of Open Weather API
             var queryURL =
-                "https://www.n2yo.com/rest/v1/satellite/above/" +
+                "http://www.n2yo.com/rest/v1/satellite/above/" +
                 cityLat +
                 "/" +
                 cityLon +
